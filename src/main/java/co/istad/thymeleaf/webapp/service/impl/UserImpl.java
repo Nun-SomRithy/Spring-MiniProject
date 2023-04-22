@@ -21,6 +21,6 @@ public class UserImpl implements UserService {
 
     @Override
     public User getSingleUser(Integer id) {
-        return userRepository.getSingleUser(id);
+        return userRepository.getListUser().stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
     }
 }

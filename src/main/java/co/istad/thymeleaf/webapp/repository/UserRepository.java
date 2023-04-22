@@ -2,12 +2,14 @@ package co.istad.thymeleaf.webapp.repository;
 
 import co.istad.thymeleaf.webapp.model.User;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Getter
 public class UserRepository {
     private List<User> listUser;
     @PostConstruct
@@ -41,14 +43,14 @@ public class UserRepository {
         }};
     }
 
-    public User getSingleUser(Integer id){
-        return listUser.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
-    }
-
-   public List<User> getListUser(){
-
-        return listUser;
-    }
+//    public User getSingleUser(Integer id){
+//        return listUser.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+//    }
+//
+//   public List<User> getListUser(){
+//
+//        return listUser;
+//    }
 
 
 

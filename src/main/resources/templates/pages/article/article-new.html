@@ -19,29 +19,35 @@
                         <input th:field="*{title}" class="form-control" id="title" type="text">
                         <div class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                     </div>
+<!--                    <div class="mb-3">-->
+<!--                        <label class="form-label" for="author">Description</label>-->
+<!--                        <input th:field="*{description}" class="form-control" id="author" type="text">-->
+<!--                        <div class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>-->
+<!--                    </div>-->
                     <div class="mb-3">
-                        <label class="form-label" for="author">Description</label>
-                        <input th:field="*{description}" class="form-control" id="author" type="text">
-                        <div class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea th:field="*{description}" class="form-control" id="description" rows="3"></textarea>
                     </div>
+
                     <div class="row">
+
                         <div class="col-6 mb-3">
-                            <label class="form-label" for="author">Categories</label>
-                            <select class="form-select" size="3" aria-label="size 3 select example">
+                            <label class="form-label" for="cat">Categories</label>
+                            <select class="form-select" id="cat" size="3" aria-label="size 3 select example">
                                 <option selected>Choose this select menu</option>
                                 <option th:each="category : ${category}" th:value="${category.id}" th:text="${category.name}">username</option>
 
                             </select>
                         </div>
+
                         <div class="col-6 mb-3">
                             <label class="form-label" for="author">Author</label>
-                            <select class="form-select" size="3" aria-label="size 3 select example">
+                            <select name="author_id" class="form-select" id="author"  aria-label="size 3 select example">
 
-                                <option selected>Choose this select menu</option>
                                 <option th:each="user : ${user}" th:value="${user.id}" th:text="${user.name}">username</option>
-
                             </select>
                         </div>
+
                     </div>
 
                     <br>

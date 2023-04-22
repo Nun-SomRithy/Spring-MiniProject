@@ -6,6 +6,7 @@ import co.istad.thymeleaf.webapp.model.User;
 import co.istad.thymeleaf.webapp.repository.CategoryRepository;
 import co.istad.thymeleaf.webapp.repository.UserRepository;
 import co.istad.thymeleaf.webapp.service.ArticleService;
+import co.istad.thymeleaf.webapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class ArticleController {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
+    private final UserService userService;
+
     @GetMapping
     String viewArticle(Model model) {
         List<Article> articles = articleService.findAll();
@@ -35,15 +38,15 @@ public class ArticleController {
 
     @GetMapping("/new")
     String viewArticleNew(Article article, Model model) {
-        List<Category> categories= categoryRepository.getAllCategory();
+        List<Category> categories = categoryRepository.getAllCategory();
         List<User> users = userRepository.getListUser();
         model.addAttribute("article", article);
-        model.addAttribute("category",categories);
-        model.addAttribute("user", users );
+        model.addAttribute("category", categories);
+        model.addAttribute("user", users);
         return "pages/article/article-new";
     }
 
-    public List<Article> findAllPostByUserId(Integer id){
+    public List<Article> findAllPostByUserId(Integer id) {
         return articleService.findAllPostByUserId(id);
     }
 
@@ -51,12 +54,14 @@ public class ArticleController {
     @PostMapping("/new")
     String doSaveArticle(@ModelAttribute @Valid Article article,
                          BindingResult result,
+                         @RequestParam("author_id") Integer author_id,
                          @RequestParam("thumbnailFile") MultipartFile file,
                          Model model) {
 
-                article.setAuthor(userRepository.getListUser().get(1));
-                article.setUuid(UUID.randomUUID().toString());
-                article.setCategory(List.of(categoryRepository.getAllCategory().get(1)));
+        User user = userService.getSingleUser(author_id);
+        article.setAuthor(user);
+        article.setUuid(UUID.randomUUID().toString());
+        article.setCategory(List.of(categoryRepository.getAllCategory().get(1)));
 //                System.out.println(article);
 
 //        if (result.hasErrors()) {
@@ -76,7 +81,6 @@ public class ArticleController {
 
         return "redirect:/";
     }
-
 
 
 }
