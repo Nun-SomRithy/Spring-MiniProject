@@ -6,6 +6,7 @@ import co.istad.thymeleaf.webapp.model.User;
 import co.istad.thymeleaf.webapp.repository.CategoryRepository;
 import co.istad.thymeleaf.webapp.repository.UserRepository;
 import co.istad.thymeleaf.webapp.service.ArticleService;
+import co.istad.thymeleaf.webapp.service.CategoriesService;
 import co.istad.thymeleaf.webapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,9 @@ public class ArticleController {
     private final ArticleService articleService;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
-
     private final UserService userService;
+
+    private  final CategoriesService categoriesService;
 
     @GetMapping
     String viewArticle(Model model) {
@@ -55,13 +57,16 @@ public class ArticleController {
     String doSaveArticle(@ModelAttribute @Valid Article article,
                          BindingResult result,
                          @RequestParam("author_id") Integer author_id,
+                         @RequestParam("categories_id") List<Integer> categories_id,
                          @RequestParam("thumbnailFile") MultipartFile file,
                          Model model) {
 
         User user = userService.getSingleUser(author_id);
         article.setAuthor(user);
         article.setUuid(UUID.randomUUID().toString());
-        article.setCategory(List.of(categoryRepository.getAllCategory().get(1)));
+        List<Category> categories = categoriesService.getByCategories(categories_id);
+        article.setCategory(categories);
+
 //                System.out.println(article);
 
 //        if (result.hasErrors()) {

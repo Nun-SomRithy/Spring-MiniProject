@@ -33,8 +33,7 @@
 
                         <div class="col-6 mb-3">
                             <label class="form-label" for="cat">Categories</label>
-                            <select class="form-select" id="cat" size="3" aria-label="size 3 select example">
-                                <option selected>Choose this select menu</option>
+                            <select name="categories_id" multiple  class="form-select" id="cat"  aria-label="size 3 select example">
                                 <option th:each="category : ${category}" th:value="${category.id}" th:text="${category.name}">username</option>
 
                             </select>

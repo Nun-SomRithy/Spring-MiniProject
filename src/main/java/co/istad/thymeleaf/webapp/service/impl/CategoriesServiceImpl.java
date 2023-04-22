@@ -21,6 +21,13 @@ public class CategoriesServiceImpl implements CategoriesService {
         return categoryRepository.getAllCategory();
     }
 
+    @Override
+    public List<Category> getByCategories(List<Integer> categories_id){
+        List<Category> categories = this.getCategories().stream().filter(category -> {
+            return categories_id.contains(category.getId());
+        }).toList();
+        return categories;
+    };
 
 
 
