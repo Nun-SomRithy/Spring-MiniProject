@@ -1,0 +1,89 @@
+<section xmlns:th="http://www.thymeleaf.org">
+    <!-- card readonly ~ start -->
+    <a th:fragment="card-readonly(uuid ,title, thumbnail,description, author,category)"
+       th:href="@{/article/{uuid}(uuid=${uuid})}" class="text-decoration-none">
+
+        <div class="card shadow-sm">
+
+            <!--      <img th:src="@{http://localhost:8080/files/{thumbnail}(thumbnail=${thumbnail})}" alt="News Coffee" class="bd-placeholder-img card-img-top">-->
+            <img th:src="${thumbnail}" class="card-img-top" th:alt="${author}">
+
+            <div class="card-body position-relative mt-4">
+                <div class="position-absolute start-0 translate-middle-y">
+
+                    <div class="d-flex ms-3 ">
+                        <h5 th:text="${author.name}"></h5>
+                        <p style="margin-left: 20px;color: blue" th:text="${author.email}"></p>
+                    </div>
+                </div>
+
+
+                <br>
+                <h5 th:text="${title}"></h5>
+                <div>
+          <span class="badge text-bg-success" th:each="cat : ${category}"
+                th:text="${cat.name}">Warning</span>
+                </div>
+                <br>
+                <!--        <p th:text="${title}" class="card-text"></p>-->
+                <div class="d-flex justify-content-between align-items-center">
+                    <small th:text="${description}" class="text-body-secondary"></small>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="#" type="button" class="btn btn-sm btn-outline-success">View</a>
+                        <a href="#" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a href="#" type="button" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                    <hr>
+                    <small class="text-body-secondary"></small>
+                </div>
+            </div>
+
+        </div>
+
+    </a>
+    <!-- card readonly ~ end -->
+
+
+    <!-- card action ~ start -->
+    <div th:fragment="card-action(uuid, title, thumbnail,decription, author)" class="card shadow-sm">
+        <img th:src="${thumbnail}" class="card-img-top" th:alt="${author}">
+        <div class="card-body">
+            <h5 th:text="${author.name}" class="card-text">name</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="#" type="button" class="btn btn-sm btn-outline-success">View</a>
+                    <a href="#" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a href="#" type="button" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+                <small th:text="${author.name}" class="text-body-secondary"></small>
+            </div>
+        </div>
+    </div>
+    <!-- card action ~ end -->
+
+
+    <!--    Card Author ~ Start -->
+    <div class="card shadow-sm border-0 h-100" th:fragment="author(user)">
+
+        <img th:src="${user.cover}" class="card-img-top" th:alt="${user.username}">
+
+        <div class="card-body">
+            <h5 class="card-title mb-0 text-uppercase" th:text="${user.name}">Card title</h5>
+            <b class="text-primary" th:text="${#strings.prepend(user.username,'@')}"></b>
+            <p class="mb-1">Gender: <span class="text-capitalize" th:text="${user.gender}"></span></p>
+            <address class="card-text mb-1">
+                Address: <span th:text="${user.address}"></span>
+            </address>
+            <p class="mb-1">Email: <span th:text="${user.email}"></span></p>
+            <div class="d-flex justify-content-center mt-2">
+                <a th:href="@{http://localhost:8080/userprofile/{userID}(userID=${user.id})} " type="button"
+                   class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    <!--    Card Author ~ End -->
+
+</section>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/master-layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<main layout:fragment="main-content">
+    <div class="container mt-3">
+        <h1>New Post</h1>
+        <form th:action="@{/article/new}" method="post" th:object="${article}" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Title</label>
+                        <input th:field="*{title}" class="form-control" id="title" type="text">
+                        <div class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="author">Description</label>
+                        <input th:field="*{description}" class="form-control" id="author" type="text">
+                        <div class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="author">Categories</label>
+                            <select class="form-select" size="3" aria-label="size 3 select example">
+                                <option selected>Choose this select menu</option>
+                                <option th:each="category : ${category}" th:value="${category.id}" th:text="${category.name}">username</option>
+
+                            </select>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="author">Author</label>
+                            <select class="form-select" size="3" aria-label="size 3 select example">
+
+                                <option selected>Choose this select menu</option>
+                                <option th:each="user : ${user}" th:value="${user.id}" th:text="${user.name}">username</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <br>
+                    <button class="btn btn-primary" type="submit">Post</button>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="thumbnailFile" class="form-label">Thumbnail</label>
+                        <input class="form-control" type="file" id="thumbnailFile" name="thumbnailFile">
+                        <img class="w-75 mt-2" id="placeholder" th:src="@{/resources/img/default/placeholder.jpg}" alt="your image" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<th:block layout:fragment="subScript">
+    <script>
+        $(function() {
+            const thumbnailFile = document.getElementById("thumbnailFile")
+            const placeholder = document.getElementById("placeholder")
+            thumbnailFile.onchange = (evt) => {
+                const [file] = thumbnailFile.files
+                if (file) {
+                    placeholder.src = URL.createObjectURL(file)
+                }
+            }
+        })
+    </script>
+</th:block>
+
+</body>
+</html>

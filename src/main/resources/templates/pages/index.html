@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+</head>
+<body>
+
+<main layout:fragment="main-content">
+
+    <!-- welcome ~ start -->
+    <div th:replace="~{fragments/welcome}"></div>
+    <!-- welcome ~ end -->
+
+    <!-- card ~ start -->
+    <div class="album py-5 bg-body-tertiary ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 ">
+                            <div class="row row-cols-sm-2 g-3">
+                                <div class="col" th:each="article : ${articles}" th:object="${article}">
+                                    <div th:replace="~{fragments/card :: card-readonly(*{uuid}, *{title}, *{thumbnail},*{description}, *{author},*{category})}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0">
+                                <!--Card Categories-->
+                                <div th:fragment="categories" class=" justify-content-center ">
+                                    <div class="card">
+                                        <img src="https://1445333.fs1.hubspotusercontent-na1.net/hubfs/1445333/Imported_Blog_Media/E-Commerce-Category-Page-Examples-Facebook.jpg"
+                                             alt="News Coffee" class="bd-placeholder-img card-img-top">
+                                        <div class="card-body">
+                                            <h4>ResArticle</h4>
+                                            <p class="card-text">Free Posting and sharing any article with insane freedom</p>
+                                            <hr>
+                                            <h6 class="card-header">
+                                                Popular Category: <span th:text="${categories.size()}"></span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="list-group  w-70 m-auto">
+                                        <button type="button" class="list-group-item list-group-item-action active bg-gradient" aria-current="true">
+                                            Top categories
+                                        </button>
+
+                                        <a type="button" class="list-group-item list-group-item-action" th:each="category : ${categories}"
+                                                th:href="@{/categories/{id}(id=${category.id})}"
+                                                th:text="${category.name}"></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <!-- card ~ end -->
+
+    <a th:href="@{/article/new}" class="position-fixed text-decoration-none bottom-0  text-white fw-bolder end-0 btn btn-primary rounded-pill d-flex align-items-center justify-content-center"
+       style="width: 60px; height: 60px; right: 25px!important; bottom:25px!important"
+    >
+        <i class="fa-solid fa-plus"></i>
+    </a>
+
+</main>
+
+
+
+
+
+</body>
+</html>
